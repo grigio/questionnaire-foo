@@ -1,0 +1,65 @@
+<h1>New Questionnaire <small>for Hand Blenders through Kelkoo UK (KUK)</small></h1>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+    <div id="questionnaire-pane" class="span8 well">
+      <div class="form-horizontal">
+        <h3>This is a questionnaire</h3>
+        <p id="placeholder">Questions go here</p>
+      
+        <div class="control-group question-score">
+          <label for="question-1" class="control-label">Question 1</label>
+          
+          <div class="controls">
+            <% (1..10).each do |i| %>
+                <label class="radio inline">
+                  <input type="radio" value="<%=i%>" name="question-1" id="question-1_<%= i %>" data-score="<%=i%>">
+                  <% if i == 1 || i == 10 %>
+                    <%=i%>
+                  <% end %>
+                </label>
+            <% end %>
+          </div>
+        </div>
+        
+        <div class="control-group question-text">
+          <label for="question-2" class="control-label">Question 2</label>
+          <div class="controls">
+            <input type="text" rows="3" id="question-2" class="input"></input>
+          </div>
+        </div>
+        
+        <div class="control-group question-text">
+          <label for="question-3" class="control-label">Question 3</label>
+          <div class="controls">
+            <textarea rows="3" id="question-3" class="input-xlarge"></textarea>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label for="question-4" class="control-label">Question 4</label>
+          <div class="controls">
+            <label class="radio inline">
+              <input type="radio" value="option1" name="question-4_option1">
+              Option 1
+            </label>
+            <label class="radio inline">
+              <input type="radio" value="option2" name="question-4_option2">
+              Option 2
+            </label>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div id="builder-pane" class="span4 well">
+      <h3>Things to put in the questionnaire:</h3>
+      <p class="draggable" id="section">New section</p>
+      <p class="draggable" id="score-question">New score question</p>
+      <p class="draggable" id="text-box-question">New text question</p>
+      <p class="draggable" id="text-area-question">New text area question</p>
+      <p class="draggable" id="radio-question">New multiple choice question</p>
+    </div>
+  </div>
+</div>
