@@ -1,10 +1,10 @@
 <div class="control-group score-question">
-  <label for="question-1" class="control-label">Question 1</label>
+  <label for="question-{{id}}" class="control-label">{{text}}</label>
 
   <div class="controls">
     <% (1..10).each do |i| %>
         <label class="radio inline">
-          <input type="radio" value="<%=i%>" name="question-1" id="question-1_<%= i %>" data-score="<%=i%>">
+          <input type="radio" value="<%=i%>" name="question-{{id}}" id="question-{{id}}_<%= i %>" data-score="<%=i%>">
           <% if i == 1 || i == 10 %>
             <%=i%>
           <% end %>

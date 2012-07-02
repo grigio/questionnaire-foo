@@ -26,3 +26,9 @@
     </div>
   </form>
 </div>
+
+<% %w{ score text text_area radio }.each do |type| %>
+  <script type="text/template" id="<%= type %>-question-template">
+    <%= erb "questions/_#{type}".to_sym %>
+  </script>
+<% end %>
