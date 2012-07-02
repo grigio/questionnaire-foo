@@ -3,27 +3,59 @@
 //= require ../vendor/underscore-min.js
 //= require ../vendor/backbone-min.js
 
+# Replace the default <%= %> interpolation
+# with {{ }} style ones, to avoid erb errors.
+_.templateSettings = {
+  interpolate : /\{\{(.+?)\}\}/g
+};
+
 jQuery ->
 
-  class Questionnaire extends Backbone.View
+  class Question extends Backbone.Model
+    defaults:
+      id: 1
+      type: 'text'
+      text: 'Question'
+
+  class QuestionView extends Backbone.View
+    initialize: ->
+      _.bindAll @
+
+    render: ->
+      type = @model.get 'type'
+      id   = @model.get 'id'
+      text = @model.get 'text'
+      template = _.template $("##{type}-question-template").html(), id: id, text: text
+      $(@el).html template
+      @
+
+  class Questionnaire extends Backbone.Collection
+    model: Question
+
+  class QuestionnaireView extends Backbone.View
     el: $ '#questionnaire-pane'
     initialize: ->
       _.bindAll @
+      @collection = new Questionnaire
+      @collection.bind 'add', @appendQuestion
       @counter = 0
-      @render()
 
-    render: ->
-      $(@el).append '<ul><li>Hi! Imma list!</li></ul>'
-
-    addQuestion: ->
+    add: (type) ->
       @counter++
-      $(@el).find('ul').append "<li>Hello, Backbone #{@counter}!</li>"
+      question = new Question type: type
+      question.set id: @counter
+      @collection.add question
+      
+    appendQuestion: (question) ->
+      q_view = new QuestionView model: question
+      $(@el).append q_view.render().el
 
-  questionnaire = new Questionnaire
+
+  questionnaire = new QuestionnaireView
 
   $(".draggable").draggable helper: "clone", opacity: 0.6
 
   $(questionnaire.el).droppable drop : (event, ui) =>
-    console.log $(ui.draggable)
-    questionnaire.addQuestion()
+    type = ui.draggable.attr('id').replace("-question", '')
+    questionnaire.add(type)
     true
