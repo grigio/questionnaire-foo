@@ -14,7 +14,7 @@ jQuery ->
   class Question extends Backbone.Model
     defaults:
       id: 1
-      type: 'text'
+      type: 'text-question'
       text: 'Question'
 
   class QuestionView extends Backbone.View
@@ -25,7 +25,7 @@ jQuery ->
       type = @model.get 'type'
       id   = @model.get 'id'
       text = @model.get 'text'
-      template = _.template $("##{type}-question-template").html(), id: id, text: text
+      template = _.template $("##{type}-template").html(), id: id, text: text
       $(@el).html template
       @
 
@@ -54,6 +54,6 @@ jQuery ->
   $(".draggable").draggable helper: "clone", opacity: 0.6
 
   $(questionnaire.el).droppable drop : (event, ui) =>
-    type = ui.draggable.attr('id').replace("-question", '')
+    type = ui.draggable.attr('id')
     questionnaire.add(type)
     true

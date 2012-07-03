@@ -27,6 +27,13 @@
   </form>
 </div>
 
+<script type="text/template" id="section-template">
+  <fieldset><legend>Section 1</legend></fieldset>
+</script>
+<script type="text/template" id="text-template">
+  <p>Informative text about this section goes here.</p>
+</script>
+
 <% %w{ score text text_area radio }.each do |type| %>
   <script type="text/template" id="<%= type %>-question-template">
     <%= erb "questions/_#{type}".to_sym %>
