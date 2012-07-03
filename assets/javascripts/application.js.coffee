@@ -10,50 +10,109 @@ _.templateSettings = {
 };
 
 jQuery ->
+  
+  # Remove Backbone's 'send every change to the server' behaviour
+  Backbone.sync = (method, model, success, error) ->
+    success
 
   class Question extends Backbone.Model
     defaults:
       id: 1
       type: 'text-question'
       text: 'Question'
+      
+  class Section extends Backbone.Model
+    defaults:
+      id: 1
+      legend: 'Section'
 
   class QuestionView extends Backbone.View
     initialize: ->
-      _.bindAll @
-
-    render: ->
+      @model.bind 'change', @render
+      
+    render: =>
       type = @model.get 'type'
       id   = @model.get 'id'
       text = @model.get 'text'
-      template = _.template $("##{type}-template").html(), id: id, text: text
-      $(@el).html template
+      template  = _.template $("##{type}-template").html(), id: id, text: text
+      $(@el).html = template
       @
-
-  class Questionnaire extends Backbone.Collection
+  
+  class QuestionCollection extends Backbone.Collection
     model: Question
-
-  class QuestionnaireView extends Backbone.View
-    el: $ '#questionnaire-pane'
+      
+  class SectionView extends Backbone.View
+    # We suffer through the extra divs because Backbone needs parent elements.
+    # Theoretically, setElement should work but it doesn't seem to propagate
+    # events correctly.
+    tagname: 'div'
+    template: _.template $("#section-template").html()
+    
     initialize: ->
-      _.bindAll @
-      @collection = new Questionnaire
-      @collection.bind 'add', @appendQuestion
+      @collection = new QuestionCollection
+      @collection.bind 'add', @appendQuestionView
+    
+      @model.bind 'change', @render
+      @model.bind 'remove', @unrender
 
-    add: (type) ->
+    addQuestion: (type) =>
       question = new Question type: type
       question.set id: (@collection.length + 1)
       @collection.add question
-      
-    appendQuestion: (question) ->
+
+    appendQuestionView: (question) =>
       q_view = new QuestionView model: question
       $(@el).append q_view.render().el
+  
+    render: =>
+      $(@el).html @template(id: @model.get('id'), legend: @model.get('legend'))
+      @
+    
+    unrender: =>
+      $(@el).remove()
+    
+    remove: =>
+      @model.destroy()
+    
+    events:
+      'click .delete': 'remove'
 
+  class Questionnaire extends Backbone.Collection
+    model: Section
+    initialize: ->
+      this.bind 'destroy', @recalculateIDs
+    
+    recalculateIDs: =>
+      model.set(id: i+1) for model, i in @models
 
-  questionnaire = new QuestionnaireView
+  class QuestionnaireView extends Backbone.View
+    el: $ '#questionnaire-pane'
+    
+    initialize: ->
+      @collection = new Questionnaire
+      @collection.bind 'add', @appendSectionView
+    
+    add: (section) =>
+      section.set id: (@collection.length + 1)
+      @collection.add section
 
+    appendSectionView: (section) =>
+      section_view = new SectionView model: section
+      $(@el).append section_view.render().el
+    
+
+  # Initialize the questionnaire container.
+  questionnaireView = new QuestionnaireView
+  
+  # Insert the default components.
+  section = new Section
+  questionnaireView.add(section)
+    # questionnaireView.add('text')
+    # questionnaireView.add('score-question')
+  
+  # Set up the JQuery UI drag-and-drop interface.
   $(".draggable").draggable helper: "clone", opacity: 0.6
-
-  $(questionnaire.el).droppable drop : (event, ui) =>
-    type = ui.draggable.attr('id')
-    questionnaire.add(type)
+  
+  $(questionnaireView.el).droppable accept: "#section", drop : (event, ui) =>
+    questionnaireView.add new Section
     true
