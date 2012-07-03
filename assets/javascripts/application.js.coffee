@@ -38,12 +38,10 @@ jQuery ->
       _.bindAll @
       @collection = new Questionnaire
       @collection.bind 'add', @appendQuestion
-      @counter = 0
 
     add: (type) ->
-      @counter++
       question = new Question type: type
-      question.set id: @counter
+      question.set id: (@collection.length + 1)
       @collection.add question
       
     appendQuestion: (question) ->
