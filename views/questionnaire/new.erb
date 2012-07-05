@@ -1,33 +1,33 @@
 <h1>New Questionnaire <small>for Hand Blenders through Kelkoo UK (KUK)</small></h1>
 
 <div class="container-fluid">
-  <form method="post" action="/questionnaire">
-    <div class="row-fluid">
-      <div id="questionnaire-pane" class="span8 well form-horizontal">
-        <h3>This is a questionnaire</h3>
-        <p>Your review will help others. Woo!</p>
-      </div>
-    
-      <div id="builder-pane" class="span4 well">
-        <h3>Things to put in the questionnaire:</h3>
-        <p class="draggable" id="section">New section</p>
-        <p class="draggable" id="text">New copy text</p>
-        <p class="draggable" id="score-question">New score question</p>
-        <p class="draggable" id="text-question">New text question</p>
-        <p class="draggable" id="text_area-question">New text area question</p>
-        <p class="draggable" id="radio-question">New multiple choice question</p>
-        <button class="btn btn-primary btn-large" type="submit">Save</button>
-      </div>
+  <div class="row-fluid">
+    <div id="questionnaire-pane" class="span8 well form-horizontal">
+      <h3>This is a questionnaire</h3>
+      <p>Your review will help others. Woo!</p>
     </div>
-  </form>
+  
+    <div id="builder-pane" class="span4 well">
+      <h3>Things to put in the questionnaire:</h3>
+      <p class="draggable" id="section">New section</p>
+      <p class="draggable" id="text">New copy text</p>
+      <p class="draggable" id="score-question">New score question</p>
+      <p class="draggable" id="text-question">New text question</p>
+      <p class="draggable" id="text_area-question">New text area question</p>
+      <p class="draggable" id="radio-question">New multiple choice question</p>
+      <button class="btn btn-primary btn-large">Save</button>
+    </div>
+  </div>
 </div>
 
 <script type="text/template" id="section-template">
-  <fieldset id="section-{{id}}">
-    <span class="delete">Delete</span>
-    <legend>{{legend}}</legend>
-  </fieldset>
+  <legend>
+    <span class="legend-text">{{legend}}</span>
+    <input type="text" name="section-{{id}}-legend" id="section-{{id}}-legend" class="inline-edit hide" value="{{legend}}"></input>
+    <span class="close button">×</span>
+  </legend>
 </script>
+
 <script type="text/template" id="text-template">
   <p id="copy-text-{{id}}">{{text}}</p>
 </script>

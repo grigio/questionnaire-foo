@@ -28,3 +28,29 @@ legend {
   padding: 5px 10px;
   background-color: #ddd;
 }
+
+.section {
+  padding: 0 10px 10px;
+  margin-bottom: 10px;
+  background-color: #F5F5F5;
+}
+
+.section:hover {
+  border-color: #bbb;
+  box-shadow: 0 0 8px #bbb;
+  outline: 0 none;
+}
+
+.section .close {
+  margin-top: 5px;
+  display: none;
+}
+
+.section:hover .close {
+  display: block;
+}
+
+span.legend-text {
+  display: inline-block;
+  min-width: 220px;
+}

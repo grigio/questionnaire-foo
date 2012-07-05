@@ -42,10 +42,8 @@ jQuery ->
     model: Question
       
   class SectionView extends Backbone.View
-    # We suffer through the extra divs because Backbone needs parent elements.
-    # Theoretically, setElement should work but it doesn't seem to propagate
-    # events correctly.
-    tagname: 'div'
+    tagname: 'fieldset'
+    className: "section"
     template: _.template $("#section-template").html()
     
     initialize: ->
@@ -65,7 +63,8 @@ jQuery ->
       $(@el).append q_view.render().el
   
     render: =>
-      $(@el).html @template(id: @model.get('id'), legend: @model.get('legend'))
+      $(@el).attr 'id', "section-#{@model.id}"
+      $(@el).html @template(id: @model.id, legend: @model.get 'legend')
       @
     
     unrender: =>
@@ -74,12 +73,26 @@ jQuery ->
     remove: =>
       @model.destroy()
     
-    events:
-      'click .delete': 'remove'
+    startEditing: =>
+      @$('.legend-text').hide()
+      @$('.inline-edit').show().focus().select()
+      
+    finishEditing: =>
+      @$('.legend-text').show()
+      @$('.inline-edit').hide()
+      @model.set legend: @$('.inline-edit').val()
+      
+    events:  
+      'click .close': 'remove'
+      'dblclick .legend-text': 'startEditing'
+      'focusout .inline-edit': 'finishEditing'
+      'keypress .inline-edit': (event) ->
+        @finishEditing() if event.which == 13 # If the keypress was 'enter'
 
   class Questionnaire extends Backbone.Collection
     model: Section
     initialize: ->
+      @sortedIDs = []
       this.bind 'destroy', @recalculateIDs
     
     recalculateIDs: =>
@@ -100,6 +113,11 @@ jQuery ->
       section_view = new SectionView model: section
       $(@el).append section_view.render().el
     
+    events:
+      'sortstop': (event, ui) ->
+        ids = ( domID.replace('section-', '') for domID in $(@el).sortable('toArray') )
+        @collection.sortedIDs = ids
+    
 
   # Initialize the questionnaire container.
   questionnaireView = new QuestionnaireView
@@ -112,6 +130,7 @@ jQuery ->
   
   # Set up the JQuery UI drag-and-drop interface.
   $(".draggable").draggable helper: "clone", opacity: 0.6
+  $("#questionnaire-pane").sortable axis: 'y', distance: 20, items: '.section', revert: true
   
   $(questionnaireView.el).droppable accept: "#section", drop : (event, ui) =>
     questionnaireView.add new Section
