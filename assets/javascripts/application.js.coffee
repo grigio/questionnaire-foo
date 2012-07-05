@@ -35,7 +35,7 @@ jQuery ->
       id   = @model.get 'id'
       text = @model.get 'text'
       template  = _.template $("##{type}-template").html(), id: id, text: text
-      $(@el).html = template
+      $(@el).html template
       @
   
   class QuestionCollection extends Backbone.Collection
@@ -65,6 +65,7 @@ jQuery ->
     render: =>
       $(@el).attr 'id', "section-#{@model.id}"
       $(@el).html @template(id: @model.id, legend: @model.get 'legend')
+      $(@el).droppable greedy: true, hoverClass: "hover", scope: 'section'
       @
     
     unrender: =>
@@ -82,7 +83,9 @@ jQuery ->
       @$('.inline-edit').hide()
       @model.set legend: @$('.inline-edit').val()
       
-    events:  
+    events:
+      'drop': (event, ui) ->
+        @addQuestion ui.draggable.attr('id')
       'click .close': 'remove'
       'dblclick .legend-text': 'startEditing'
       'focusout .inline-edit': 'finishEditing'
@@ -130,8 +133,10 @@ jQuery ->
   
   # Set up the JQuery UI drag-and-drop interface.
   $(".draggable").draggable helper: "clone", opacity: 0.6
+  $(".section-draggable").draggable helper: "clone", opacity: 0.6, scope: 'section'
+
   $("#questionnaire-pane").sortable axis: 'y', distance: 20, items: '.section', revert: true
-  
+
   $(questionnaireView.el).droppable accept: "#section", drop : (event, ui) =>
     questionnaireView.add new Section
     true
