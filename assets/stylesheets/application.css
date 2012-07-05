@@ -36,18 +36,29 @@ legend {
   background-color: #F5F5F5;
 }
 
-.section:hover, .section.hover {
+.control-group {
+  padding: 10px 12px;
+  background-color: #F5F5F5;
+}
+
+.section:hover, .section.hover,
+.control-group:hover {
   border-color: #bbb;
   box-shadow: 0 0 8px #bbb;
   outline: 0 none;
 }
 
-.section .close {
+.section legend .close {
   margin-top: 5px;
   display: none;
 }
 
-.section:hover .close {
+.control-group .close {
+  display: none;
+}
+
+.section:hover legend .close,
+.control-group:hover .close {
   display: block;
 }
 

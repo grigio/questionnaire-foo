@@ -1,14 +1,13 @@
-<div class="control-group score-question">
-  <label for="question-{{id}}" class="control-label">{{text}}</label>
+<span class="close button" data-remove="question">×</span>
+<label for="question-{{id}}" class="control-label">{{text}}</label>
 
-  <div class="controls">
-    <% (1..10).each do |i| %>
-        <label class="radio inline">
-          <input type="radio" value="<%=i%>" name="question-{{id}}" id="question-{{id}}_<%= i %>" data-score="<%=i%>">
-          <% if i == 1 || i == 10 %>
-            <%=i%>
-          <% end %>
-        </label>
-    <% end %>
-  </div>
+<div class="controls">
+  <% (1..10).each do |i| %>
+      <label class="radio inline">
+        <input type="radio" value="<%=i%>" name="question-{{id}}" id="question-{{id}}_<%= i %>" data-score="<%=i%>">
+        <% if i == 1 || i == 10 %>
+          <%=i%>
+        <% end %>
+      </label>
+  <% end %>
 </div>

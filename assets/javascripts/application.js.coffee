@@ -35,11 +35,15 @@ jQuery ->
       @collection.add question
 
   class QuestionView extends Backbone.View
+    tagName: 'div'
+    className: 'control-group'
+      
     initialize: ->
       @model.bind 'change', @render
       @model.bind 'remove', @unrender
       
     render: =>
+      $(@el).attr 'id', "question-#{@model.id}"
       template  = _.template $("##{@model.get 'type'}-template").html(), id: @model.id, text: @model.get 'text'
       $(@el).html template
       @
@@ -47,7 +51,7 @@ jQuery ->
     unrender: =>
       $(@el).remove()
       
-    remove: =>
+    remove: (event) =>
       @model.destroy()
       
     startEditing: =>
@@ -55,12 +59,22 @@ jQuery ->
       editView.render()
 
     events:  
-      'click .close': 'remove'
+      'click [data-remove="question"]': 'remove'
       'dblclick .control-label': 'startEditing'
   
   class QuestionCollection extends Backbone.Collection
     model: Question
-      
+    initialize: ->
+      @sortedIDs = []
+      this.bind 'destroy', @recalculateIDs
+    
+    recalculateIDs: =>
+      model.set(id: i+1) for model, i in @models
+    
+    comparator: (model) =>
+      index = @sortedIDs.indexOf @model.id
+      if index then index else @model.id
+
   class SectionView extends Backbone.View
     tagname: 'fieldset'
     className: "section"
@@ -80,14 +94,15 @@ jQuery ->
       $(@el).html @template(id: @model.id, legend: @model.get 'legend')
       
       @appendQuestionView(question) for question in @model.collection.models
-        
+      
+      $(@el).sortable axis: 'y', distance: 20, items: '.control-group', revert: true
       $(@el).droppable hoverClass: "hover", scope: 'section'
       @
     
     unrender: =>
       $(@el).remove()
     
-    remove: =>
+    remove: (event) =>
       @model.destroy()
     
     startEditing: =>
@@ -95,9 +110,12 @@ jQuery ->
       editView.render()
       
     events:
+      'sortstop': (event, ui) ->
+        ids = ( domID.replace('question-', '') for domID in $(@el).sortable('toArray') )
+        @model.collection.sortedIDs = ids
       'drop': (event, ui) ->
         @model.addQuestion type: ui.draggable.attr('id')
-      'click .close': 'remove'
+      'click [data-remove="section"]': 'remove'
       'dblclick .legend-text': 'startEditing'
 
   class Questionnaire extends Backbone.Collection
@@ -108,6 +126,10 @@ jQuery ->
     
     recalculateIDs: =>
       model.set(id: i+1) for model, i in @models
+    
+    comparator: (model) =>
+      index = @sortedIDs.indexOf @model.id
+      if index then index else @model.id
 
   class QuestionnaireView extends Backbone.View
     el: $ '#questionnaire-pane'
