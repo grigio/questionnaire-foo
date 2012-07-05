@@ -25,10 +25,19 @@ jQuery ->
     defaults:
       id: 1
       legend: 'Section'
+    
+    initialize: ->
+      @collection = new QuestionCollection
+      
+    addQuestion: (attributes) =>
+      question = new Question attributes
+      question.set id: (@collection.length + 1)
+      @collection.add question
 
   class QuestionView extends Backbone.View
     initialize: ->
       @model.bind 'change', @render
+      @model.bind 'remove', @unrender
       
     render: =>
       type = @model.get 'type'
@@ -37,11 +46,19 @@ jQuery ->
       template  = _.template $("##{type}-template").html(), id: id, text: text
       $(@el).html template
       @
+      
+    unrender: =>
+      $(@el).remove()
+      
+    remove: =>
+      @model.destroy()
+      
     startEditing: =>
       editView = new InlineEditView editElement: @$('.control-label'), model: @model, fieldName: 'text'
       editView.render()
 
     events:  
+      'click .close': 'remove'
       'dblclick .control-label': 'startEditing'
   
   class QuestionCollection extends Backbone.Collection
@@ -53,16 +70,9 @@ jQuery ->
     template: _.template $("#section-template").html()
     
     initialize: ->
-      @collection = new QuestionCollection
-      @collection.bind 'add', @appendQuestionView
-    
       @model.bind 'change', @render
       @model.bind 'remove', @unrender
-
-    addQuestion: (type) =>
-      question = new Question type: type
-      question.set id: (@collection.length + 1)
-      @collection.add question
+      @model.collection.bind 'add', @appendQuestionView
 
     appendQuestionView: (question) =>
       q_view = new QuestionView model: question
@@ -86,7 +96,7 @@ jQuery ->
       
     events:
       'drop': (event, ui) ->
-        @addQuestion ui.draggable.attr('id')
+        @model.addQuestion type: ui.draggable.attr('id')
       'click .close': 'remove'
       'dblclick .legend-text': 'startEditing'
 
