@@ -23,7 +23,6 @@
 <script type="text/template" id="section-template">
   <legend>
     <span class="legend-text">{{legend}}</span>
-    <input type="text" name="section-{{id}}-legend" id="section-{{id}}-legend" class="inline-edit hide" value="{{legend}}"></input>
     <span class="close button">×</span>
   </legend>
 </script>
@@ -37,3 +36,7 @@
     <%= erb "questions/_#{type}".to_sym %>
   </script>
 <% end %>
+
+<script type="text/template" id="inline-edit-template">
+  <input type="text" name="{{inputName}}" value="{{initialValue}}"></input>
+</script>

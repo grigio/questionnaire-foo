@@ -75,22 +75,14 @@ jQuery ->
       @model.destroy()
     
     startEditing: =>
-      @$('.legend-text').hide()
-      @$('.inline-edit').show().focus().select()
-      
-    finishEditing: =>
-      @$('.legend-text').show()
-      @$('.inline-edit').hide()
-      @model.set legend: @$('.inline-edit').val()
+      editView = new InlineEditView editElement: @$('.legend-text'), model: @model, fieldName: 'legend'
+      editView.render()
       
     events:
       'drop': (event, ui) ->
         @addQuestion ui.draggable.attr('id')
       'click .close': 'remove'
       'dblclick .legend-text': 'startEditing'
-      'focusout .inline-edit': 'finishEditing'
-      'keypress .inline-edit': (event) ->
-        @finishEditing() if event.which == 13 # If the keypress was 'enter'
 
   class Questionnaire extends Backbone.Collection
     model: Section
@@ -120,6 +112,41 @@ jQuery ->
       'sortstop': (event, ui) ->
         ids = ( domID.replace('section-', '') for domID in $(@el).sortable('toArray') )
         @collection.sortedIDs = ids
+    
+  class InlineEditView extends Backbone.View
+    tagName: 'span'
+    class: "inline-edit"
+    template: _.template $("#inline-edit-template").html()
+      
+    initialize: (options)->
+      @model = options.model
+      @fieldName = options.fieldName
+      @editElement = options.editElement
+    
+    value: =>
+      @$('input').val()
+    
+    focusAndSelect: =>
+      @$('input').focus().select()
+    
+    render: =>
+      @editElement.hide()
+      $(@el).attr 'id', "inline-edit-#{@model.cid}-container"
+      $(@el).append @template(inputName: "inline-edit-#{@model.cid}", initialValue: @model.get(@fieldName))
+      @editElement.after(@el)
+      @focusAndSelect()
+      @
+    
+    unrender: =>
+      @model.set @fieldName, @value()
+      $(@el).remove()
+      @editElement.show()
+      @
+      
+    events:
+      'focusout': 'unrender'
+      'keypress': (event) ->
+        @unrender() if event.which == 13 # If the keypress was 'enter'
     
 
   # Initialize the questionnaire container.
