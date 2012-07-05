@@ -40,10 +40,7 @@ jQuery ->
       @model.bind 'remove', @unrender
       
     render: =>
-      type = @model.get 'type'
-      id   = @model.get 'id'
-      text = @model.get 'text'
-      template  = _.template $("##{type}-template").html(), id: id, text: text
+      template  = _.template $("##{@model.get 'type'}-template").html(), id: @model.id, text: @model.get 'text'
       $(@el).html template
       @
       
@@ -72,7 +69,7 @@ jQuery ->
     initialize: ->
       @model.bind 'change', @render
       @model.bind 'remove', @unrender
-      @model.collection.bind 'add', @appendQuestionView
+      @model.collection.bind 'add', @render
 
     appendQuestionView: (question) =>
       q_view = new QuestionView model: question
@@ -81,6 +78,9 @@ jQuery ->
     render: =>
       $(@el).attr 'id', "section-#{@model.id}"
       $(@el).html @template(id: @model.id, legend: @model.get 'legend')
+      
+      @appendQuestionView(question) for question in @model.collection.models
+        
       $(@el).droppable hoverClass: "hover", scope: 'section'
       @
     
@@ -169,11 +169,16 @@ jQuery ->
   questionnaireView = new QuestionnaireView
   
   # Insert the default components.
-  section = new Section
-  questionnaireView.add(section)
-    # questionnaireView.add('text')
-    # questionnaireView.add('score-question')
+  section = new Section legend: 'Rate your product'
   
+  section.collection = new QuestionCollection [
+    {type: 'score-question', text: 'Overall Score', id: 1},
+    {type: 'text_area-question', text: 'Good points', id: 2},
+    {type: 'text_area-question', text: 'Bad points', id: 3}
+  ]
+  
+  questionnaireView.add(section)
+
   # Set up the JQuery UI drag-and-drop interface.
   $(".draggable").draggable helper: "clone", opacity: 0.6
   $(".section-draggable").draggable helper: "clone", opacity: 0.6, scope: 'section'
