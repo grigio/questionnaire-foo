@@ -37,6 +37,12 @@ jQuery ->
       template  = _.template $("##{type}-template").html(), id: id, text: text
       $(@el).html template
       @
+    startEditing: =>
+      editView = new InlineEditView editElement: @$('.control-label'), model: @model, fieldName: 'text'
+      editView.render()
+
+    events:  
+      'dblclick .control-label': 'startEditing'
   
   class QuestionCollection extends Backbone.Collection
     model: Question
@@ -65,7 +71,7 @@ jQuery ->
     render: =>
       $(@el).attr 'id', "section-#{@model.id}"
       $(@el).html @template(id: @model.id, legend: @model.get 'legend')
-      $(@el).droppable greedy: true, hoverClass: "hover", scope: 'section'
+      $(@el).droppable hoverClass: "hover", scope: 'section'
       @
     
     unrender: =>
@@ -115,7 +121,7 @@ jQuery ->
     
   class InlineEditView extends Backbone.View
     tagName: 'span'
-    class: "inline-edit"
+    className: "inline-edit"
     template: _.template $("#inline-edit-template").html()
       
     initialize: (options)->

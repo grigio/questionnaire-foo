@@ -55,3 +55,9 @@ span.legend-text {
   display: inline-block;
   min-width: 220px;
 }
+
+.control-group .inline-edit input {
+  width: 140px;
+  float: left;
+  text-align: right;
+}
