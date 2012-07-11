@@ -55,12 +55,12 @@ jQuery ->
       @model.destroy()
 
     startEditing: =>
-      editView = new InlineEditView editElement: @$('.control-label'), model: @model, fieldName: 'text'
+      editView = new InlineEditView editElement: @$('.editable'), model: @model, fieldName: 'text'
       editView.render()
 
     events:
       'click [data-remove="question"]': 'remove'
-      'dblclick .control-label': 'startEditing'
+      'dblclick .editable': 'startEditing'
 
   class QuestionCollection extends Backbone.Collection
     model: Question
@@ -194,9 +194,10 @@ jQuery ->
   section = new Section legend: 'Rate your product'
 
   section.collection = new QuestionCollection [
-    {type: 'score-question', text: 'Overall Score', id: 1},
-    {type: 'text_area-question', text: 'Good points', id: 2},
-    {type: 'text_area-question', text: 'Bad points', id: 3}
+    {type: 'copy-text', text: 'Talk about the thing you bought.', id: 1},
+    {type: 'score-question', text: 'Overall Score:', id: 2},
+    {type: 'text_area-question', text: 'Good points:', id: 3},
+    {type: 'text_area-question', text: 'Bad points:', id: 4}
   ]
 
   questionnaireView.add(section)

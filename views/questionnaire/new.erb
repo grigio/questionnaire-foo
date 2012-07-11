@@ -10,7 +10,7 @@
     <div id="builder-pane" class="span4 well">
       <h3>Things to put in the questionnaire:</h3>
       <p class="draggable" id="section">New section</p>
-      <p class="section-draggable" id="text">New copy text</p>
+      <p class="section-draggable" id="copy-text">New copy text</p>
       <p class="section-draggable" id="score-question">New score question</p>
       <p class="section-draggable" id="text-question">New text question</p>
       <p class="section-draggable" id="text_area-question">New text area question</p>
@@ -27,8 +27,11 @@
   </legend>
 </script>
 
-<script type="text/template" id="text-template">
-  <p id="copy-text-{{id}}">{{text}}</p>
+<script type="text/template" id="copy-text-template">
+  <p id="copy-text-{{id}}">
+    <span class="editable">{{text}}</span>
+    <span class="close button" data-remove="question">×</span>
+  </p>
 </script>
 
 <% %w{ score text text_area radio }.each do |type| %>

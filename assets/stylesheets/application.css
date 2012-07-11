@@ -72,3 +72,9 @@ span.legend-text {
   float: left;
   text-align: right;
 }
+
+.control-group p .inline-edit input {
+  width: 500px;
+  float: none;
+  text-align: left;
+}
