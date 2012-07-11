@@ -15,7 +15,7 @@
       <p class="section-draggable" id="text-question">New text question</p>
       <p class="section-draggable" id="text_area-question">New text area question</p>
       <p class="section-draggable" id="radio-question">New multiple choice question</p>
-      <button class="btn btn-primary btn-large">Save</button>
+      <button id="create" class="btn btn-primary btn-large">Save</button>
     </div>
   </div>
 </div>
@@ -42,4 +42,10 @@
 
 <script type="text/template" id="inline-edit-template">
   <input type="text" name="{{inputName}}" value="{{initialValue}}"></input>
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    questionnaire.loadFromStoredData(<%= @default_template %>)
+  })
 </script>

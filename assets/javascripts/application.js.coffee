@@ -27,12 +27,19 @@ jQuery ->
       legend: 'Section'
 
     initialize: ->
-      @collection = new QuestionCollection
+      @questions = new QuestionCollection
 
     addQuestion: (attributes) =>
       question = new Question attributes
-      question.set id: (@collection.length + 1)
-      @collection.add question
+      question.set id: (@questions.length + 1)
+      @questions.add question
+
+    # Default toJSON method:
+    # toJSON : function() {
+    #   return _.clone(this.attributes);
+    # }
+    toJSON: =>
+      _.clone id: @id, legend: @attributes.legend, questions: @questions.toJSON()
 
   class QuestionView extends Backbone.View
     tagName: 'div'
@@ -93,7 +100,7 @@ jQuery ->
       $(@el).attr 'id', "section-#{@model.id}"
       $(@el).html @template(id: @model.id, legend: @model.get 'legend')
 
-      @appendQuestionView(question) for question in @model.collection.models
+      @appendQuestionView(question) for question in @model.questions.models
 
       $(@el).sortable axis: 'y', distance: 20, items: '.control-group', revert: true
       $(@el).droppable hoverClass: "hover", scope: 'section'
@@ -130,6 +137,12 @@ jQuery ->
     comparator: (model) =>
       index = @sortedIDs.indexOf @model.id
       if index then index else @model.id
+
+    loadFromStoredData: (data) =>
+      for section_json in data.sections
+        section = new Section id: section_json.id, legend: section_json.legend
+        section.questions.reset section_json.questions # This line shouldn't really be needed. What's going on?
+        @add section
 
   class QuestionnaireView extends Backbone.View
     el: $ '#questionnaire-pane'
@@ -190,18 +203,6 @@ jQuery ->
   # Initialize the questionnaire container.
   questionnaireView = new QuestionnaireView
 
-  # Insert the default components.
-  section = new Section legend: 'Rate your product'
-
-  section.collection = new QuestionCollection [
-    {type: 'copy-text', text: 'Talk about the thing you bought.', id: 1},
-    {type: 'score-question', text: 'Overall Score:', id: 2},
-    {type: 'text_area-question', text: 'Good points:', id: 3},
-    {type: 'text_area-question', text: 'Bad points:', id: 4}
-  ]
-
-  questionnaireView.add(section)
-
   # Set up the JQuery UI drag-and-drop interface.
   $(".draggable").draggable helper: "clone", opacity: 0.6
   $(".section-draggable").draggable helper: "clone", opacity: 0.6, scope: 'section'
@@ -211,3 +212,8 @@ jQuery ->
   $(questionnaireView.el).droppable accept: "#section", drop : (event, ui) =>
     questionnaireView.add new Section
     true
+
+  $("button#create").click ->
+    $.post "/questionnaire", trkref: 'KUK', product: 'Hand Blenders', sections: questionnaireView.collection.toJSON()
+
+  window.questionnaire = questionnaireView.collection

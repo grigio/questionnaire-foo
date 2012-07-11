@@ -1,0 +1,12 @@
+{"sections":[
+  {"id":"1","legend":"Rate your product","questions":[
+    {"id":"1","type":"copy-text","text":"Talk about the thing you bought."},
+    {"id":"2","type":"score-question","text":"Overall Score:"},
+    {"id":"3","type":"text_area-question","text":"Good points:"},
+    {"id":"4","type":"text_area-question","text":"Bad points:"}
+  ]},
+  {"id":"2","legend":"Purchasing experience","questions":[
+    {"id":"1","type":"copy-text","text":"Talk about the retailer."},
+    {"id":"2","type":"radio-question","text":"Would you buy again?"},
+  ]},
+]}
