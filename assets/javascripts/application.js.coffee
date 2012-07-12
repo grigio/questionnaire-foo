@@ -17,30 +17,30 @@ jQuery ->
 
   class Question extends Backbone.Model
     defaults:
-      id: 1
+      # id: 1
       type: 'text-question'
       text: 'Question'
 
   class Section extends Backbone.Model
     defaults:
-      id: 1
+      # id: 1
       legend: 'Section'
 
-    initialize: ->
-      @questions = new QuestionCollection
+    initialize: (attributes) ->
+      @collection = new QuestionCollection attributes.collection
 
     addQuestion: (attributes) =>
       question = new Question attributes
-      question.set id: (@questions.length + 1)
-      @questions.add question
-
+      # question.set id: (@collection.length + 1)
+      @collection.add question
+      
     # Default toJSON method:
     # toJSON : function() {
     #   return _.clone(this.attributes);
     # }
     toJSON: =>
-      _.clone id: @id, legend: @attributes.legend, questions: @questions.toJSON()
-
+      _.clone legend: @attributes.legend, collection: @collection.toJSON()
+      
   class QuestionView extends Backbone.View
     tagName: 'div'
     className: 'control-group'
@@ -50,8 +50,8 @@ jQuery ->
       @model.bind 'remove', @unrender
 
     render: =>
-      $(@el).attr 'id', "question-#{@model.id}"
-      template  = _.template $("##{@model.get 'type'}-template").html(), id: @model.id, text: @model.get 'text'
+      $(@el).attr 'id', "question-#{@model.cid}"
+      template  = _.template $("##{@model.get 'type'}-template").html(), id: @model.cid, text: @model.get 'text'
       $(@el).html template
       @
 
@@ -76,11 +76,11 @@ jQuery ->
       this.bind 'destroy', @recalculateIDs
 
     recalculateIDs: =>
-      model.set(id: i+1) for model, i in @models
-
+      # model.set(id: i+1) for model, i in @models
+    # 
     comparator: (model) =>
-      index = @sortedIDs.indexOf @model.id
-      if index then index else @model.id
+      index = @sortedIDs.indexOf model.cid
+      if index != -1 then index else model.cid
 
   class SectionView extends Backbone.View
     tagname: 'fieldset'
@@ -97,10 +97,10 @@ jQuery ->
       $(@el).append q_view.render().el
 
     render: =>
-      $(@el).attr 'id', "section-#{@model.id}"
-      $(@el).html @template(id: @model.id, legend: @model.get 'legend')
+      $(@el).attr 'id', "section-#{@model.cid}"
+      $(@el).html @template(id: @model.cid, legend: @model.get 'legend')
 
-      @appendQuestionView(question) for question in @model.questions.models
+      @appendQuestionView(question) for question in @model.collection.models
 
       $(@el).sortable axis: 'y', distance: 20, items: '.control-group', revert: true
       $(@el).droppable hoverClass: "hover", scope: 'section'
@@ -132,17 +132,12 @@ jQuery ->
       this.bind 'destroy', @recalculateIDs
 
     recalculateIDs: =>
-      model.set(id: i+1) for model, i in @models
+      # model.set(id: i+1) for model, i in @models
+      
 
-    comparator: (model) =>
-      index = @sortedIDs.indexOf @model.id
-      if index then index else @model.id
-
-    loadFromStoredData: (data) =>
-      for section_json in data.sections
-        section = new Section id: section_json.id, legend: section_json.legend
-        section.questions.reset section_json.questions # This line shouldn't really be needed. What's going on?
-        @add section
+    # comparator: (model) =>
+    #   index = @sortedIDs.indexOf model.id
+    #   if index != -1 then index else model.id
 
   class QuestionnaireView extends Backbone.View
     el: $ '#questionnaire-pane'
@@ -150,14 +145,19 @@ jQuery ->
     initialize: ->
       @collection = new Questionnaire
       @collection.bind 'add', @appendSectionView
+      @collection.bind 'reset', @rerender
 
     add: (section) =>
-      section.set id: (@collection.length + 1)
+      # section.set id: (@collection.length + 1)
       @collection.add section
 
     appendSectionView: (section) =>
       section_view = new SectionView model: section
       $(@el).append section_view.render().el
+    
+    rerender: =>
+      $(@el).empty()
+      @appendSectionView(section) for section in @collection.models
 
     events:
       'sortstop': (event, ui) ->
@@ -217,3 +217,4 @@ jQuery ->
     $.post "/questionnaire", trkref: 'KUK', product: 'Hand Blenders', sections: questionnaireView.collection.toJSON()
 
   window.questionnaire = questionnaireView.collection
+  
