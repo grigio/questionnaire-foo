@@ -46,6 +46,12 @@
 
 <script type="text/javascript">
   $(document).ready( function(){
-    questionnaire.reset(<%= @default_template %>)
+    qv = new QuestionnaireView
+    qv.collection.reset(<%= @default_template %>)
+    
+    $("button#create").click( function(){
+      $.post("/questionnaire", {trkref: 'KUK', product: 'Hand Blenders', sections: qv.collection.toJSON()})
+    })
+
   })
 </script>
