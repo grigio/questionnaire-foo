@@ -39,6 +39,11 @@
     <%= erb "questions/_#{type}".to_sym %>
   </script>
 <% end %>
+<script type="text/template" id="answer-template">
+  <input type="radio" value="{{value}}" name="question-{{questionID}}_{{value}}">
+  {{text}}
+  <span class="close button" data-remove="answer">×</span>
+</script>
 
 <script type="text/template" id="inline-edit-template">
   <input type="text" name="{{inputName}}" value="{{initialValue}}"></input>

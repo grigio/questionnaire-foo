@@ -10,7 +10,10 @@ jQuery ->
       @model.collection.bind 'add', @render
 
     appendQuestionView: (question) =>
-      q_view = new QuestionView model: question
+      if question.get('type') == 'radio-question'
+        q_view = new RadioQuestionView model: question
+      else
+        q_view = new QuestionView model: question
       $(@el).append q_view.render().el
 
     render: =>
