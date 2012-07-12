@@ -17,21 +17,20 @@ jQuery ->
 
   class Question extends Backbone.Model
     defaults:
-      # id: 1
       type: 'text-question'
       text: 'Question'
 
   class Section extends Backbone.Model
     defaults:
-      # id: 1
       legend: 'Section'
 
     initialize: (attributes) ->
-      @collection = new QuestionCollection attributes.collection
+      questions = attributes.collection if attributes?
+      @collection = new QuestionCollection questions
 
     addQuestion: (attributes) =>
       question = new Question attributes
-      # question.set id: (@collection.length + 1)
+      question.set position: (@collection.length + 1)
       @collection.add question
       
     # Default toJSON method:
@@ -39,7 +38,7 @@ jQuery ->
     #   return _.clone(this.attributes);
     # }
     toJSON: =>
-      _.clone legend: @attributes.legend, collection: @collection.toJSON()
+      _.clone position: @attributes.position, legend: @attributes.legend, collection: @collection.toJSON()
       
   class QuestionView extends Backbone.View
     tagName: 'div'
@@ -71,16 +70,9 @@ jQuery ->
 
   class QuestionCollection extends Backbone.Collection
     model: Question
-    initialize: ->
-      @sortedIDs = []
-      this.bind 'destroy', @recalculateIDs
-
-    recalculateIDs: =>
-      # model.set(id: i+1) for model, i in @models
-    # 
-    comparator: (model) =>
-      index = @sortedIDs.indexOf model.cid
-      if index != -1 then index else model.cid
+    
+    comparator: (model, model2) =>
+      model.get('position') - model2.get('position')
 
   class SectionView extends Backbone.View
     tagname: 'fieldset'
@@ -98,7 +90,7 @@ jQuery ->
 
     render: =>
       $(@el).attr 'id', "section-#{@model.cid}"
-      $(@el).html @template(id: @model.cid, legend: @model.get 'legend')
+      $(@el).html @template(legend: @model.get('legend'))
 
       @appendQuestionView(question) for question in @model.collection.models
 
@@ -118,8 +110,8 @@ jQuery ->
 
     events:
       'sortstop': (event, ui) ->
-        ids = ( domID.replace('question-', '') for domID in $(@el).sortable('toArray') )
-        @model.collection.sortedIDs = ids
+        @model.collection.getByCid(domID.replace('question-', '')).set(position: i+1) for domID, i in $(@el).sortable('toArray')
+        @model.collection.sort()
       'drop': (event, ui) ->
         @model.addQuestion type: ui.draggable.attr('id')
       'click [data-remove="section"]': 'remove'
@@ -127,17 +119,9 @@ jQuery ->
 
   class Questionnaire extends Backbone.Collection
     model: Section
-    initialize: ->
-      @sortedIDs = []
-      this.bind 'destroy', @recalculateIDs
-
-    recalculateIDs: =>
-      # model.set(id: i+1) for model, i in @models
-      
-
-    # comparator: (model) =>
-    #   index = @sortedIDs.indexOf model.id
-    #   if index != -1 then index else model.id
+    
+    comparator: (model, model2) =>
+      model.get('position') - model2.get('position')
 
   class QuestionnaireView extends Backbone.View
     el: $ '#questionnaire-pane'
@@ -148,22 +132,23 @@ jQuery ->
       @collection.bind 'reset', @rerender
 
     add: (section) =>
-      # section.set id: (@collection.length + 1)
+      section.set position: (@collection.length + 1)
       @collection.add section
+      @collection.sort()
 
     appendSectionView: (section) =>
       section_view = new SectionView model: section
       $(@el).append section_view.render().el
     
     rerender: =>
-      $(@el).empty()
+      @$('.section').remove()
       @appendSectionView(section) for section in @collection.models
 
     events:
       'sortstop': (event, ui) ->
-        ids = ( domID.replace('section-', '') for domID in $(@el).sortable('toArray') )
-        @collection.sortedIDs = ids
-
+        @collection.getByCid(domID.replace('section-', '')).set(position: i+1) for domID, i in $(@el).sortable('toArray')
+        @collection.sort()
+        
   class InlineEditView extends Backbone.View
     tagName: 'span'
     className: "inline-edit"

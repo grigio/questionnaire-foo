@@ -1,14 +1,18 @@
 [
-  { "legend":"Rate your product",
+  { "position": 1,
+    "legend":"Rate your product",
     "collection":[
-      {"type":"copy-text","text":"Talk about the thing you bought."},
-      {"type":"score-question","text":"Overall Score:"}
+      {"position": 1, "type":"copy-text","text":"Talk about the thing you bought."},
+      {"position": 2, "type":"score-question","text":"Overall Score:"},
+      {"position": 3, "type":"text_area-question","text":"Good points:"},
+      {"position": 4, "type":"text_area-question","text":"Bad points:"}
     ]
   },
-  { "legend":"About the retailer",
+  { "position": 2,
+    "legend":"About the retailer",
     "collection":[
-      {"type":"copy-text","text":"Talk about your purchasing expirience."},
-      {"type":"radio-question","text":"Would you buy again?"}
+      {"position": 1, "type":"copy-text","text":"Talk about your purchasing expirience."},
+      {"position": 2, "type":"radio-question","text":"Would you buy again?"}
     ]
   }
 ]
