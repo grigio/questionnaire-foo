@@ -1,0 +1,24 @@
+<h1>Questionnaires</h1>
+
+<div class="container">
+  <ul>
+    <% @existing_templates.each do |(trkref, product)| %>
+      <li>
+        <a href="/questionnaire/new?trkref=<%= trkref%>&product=<%=product%>">
+          <%= [product.sub('_', ' ').capitalize, trkref].compact.join(' sold by ')%>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+  <form method="GET" action="/questionnaire/new">
+    <label for="product_name" class="control-label">Product type</label>
+    <div class="controls">
+      <input type="text" name="product_name" class="input"></input>
+    </div>
+    <label for="trkref" class="control-label">TRKREF</label>
+    <div class="controls">
+      <input type="text" name="trkref" class="input"></input>
+    </div>
+    <button type="submit" class="btn btn-primary btn-large">New</button>
+  </form>
+</div>

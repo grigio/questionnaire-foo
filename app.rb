@@ -1,8 +1,25 @@
 require 'sinatra'
 require 'json'
 
+get '/questionnaire' do
+  @existing_templates = Dir.glob('store/*-*.json').map do |filename| 
+    filename.sub("store/", '').sub('.json', '').split('-')
+  end
+  erb :"questionnaire/index"
+end
+
 get '/questionnaire/new' do
-  @default_template = File.read('store/default.json')
+  if params[:trkref] || params[:product_name]
+    @trkref = params[:trkref]
+    @product_name = params[:product_name].sub(' ', '_').downcase
+  end
+  
+  filename = "store/#{@trkref}-#{@product_name}"
+  if File.exist?(filename)
+    @template = File.read(filename) 
+  else
+    @template = File.read('store/default.json')
+  end
   erb :"questionnaire/new"
 end
 
