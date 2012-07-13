@@ -28,7 +28,7 @@ jQuery ->
       'dblclick .editable': 'startEditing'
 
   window.QuestionView = QuestionView
-  
+
   class RadioQuestionView extends QuestionView
     render: =>
       super()
@@ -37,7 +37,6 @@ jQuery ->
     appendAnswerView: (answer) =>
       view = new AnswerView model: answer
       @$('.controls').append view.render().el
-      
-      
+
+
   window.RadioQuestionView = RadioQuestionView
-  

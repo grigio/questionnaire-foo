@@ -12,7 +12,9 @@
     "legend":"About the retailer",
     "collection":[
       {"position": 1, "type":"copy-text","text":"Talk about your purchasing expirience."},
-      {"position": 2, "type":"radio-question","text":"Would you buy again?"}
+      {"position": 2, "type":"radio-question","text":"Would you buy again?", "answers": [
+        {"text": "Yes"}, {"text": "No"}
+      ]}
     ]
   }
 ]

@@ -8,10 +8,8 @@ jQuery ->
       @collection = new QuestionCollection questions
 
     addQuestion: (attributes) =>
-      question = new Question attributes
-      question.set position: (@collection.length + 1)
-      @collection.add question
-    
+      @collection.add type: attributes.type, position: (@collection.length + 1), text: 'Question'
+
     # Default toJSON method:
     # toJSON : function() {
     #   return _.clone(this.attributes);

@@ -53,7 +53,7 @@
   $(document).ready( function(){
     qv = new QuestionnaireView
     qv.collection.reset(<%= @template %>)
-    
+
     $("button#create").click( function(){
       $.post("/questionnaire", {trkref: '<%= @trkref %>', product: '<%= @product_name %>', sections: qv.collection.toJSON()})
     })
