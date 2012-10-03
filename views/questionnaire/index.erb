@@ -4,7 +4,7 @@
   <ul>
     <% @existing_templates.each do |(trkref, product)| %>
       <li>
-        <a href="/questionnaire/new?trkref=<%= trkref%>&product=<%=product%>">
+        <a href="/questionnaire/new?trkref=<%= trkref%>&product_name=<%=product%>">
           <%= [product.sub('_', ' ').capitalize, trkref].compact.join(' sold by ')%>
         </a>
       </li>

@@ -1,0 +1,205 @@
+[
+  {
+    "position": "1",
+    "legend": "Linux Day Torino 2012",
+    "collection": [
+      {
+        "position": "1",
+        "text": "Ciao visitatore! Rispondendo a queste domande ci permetterai di fare un Linux Day sempre migliore e potrai rimanere informato su altre iniziative F/OSS che verranno organizzate su Torino e Provincia",
+        "type": "copy-text"
+      },
+      {
+        "position": "3",
+        "text": "Quale luogo preferisci per il Linux Day?",
+        "type": "radio-question",
+        "answers": [
+          {
+            "text": "Cortile del Maglio (attuale)",
+            "questionID": "c3"
+          },
+          {
+            "text": "Cascina Roccafranca",
+            "questionID": "c3"
+          },
+          {
+            "text": "Non so",
+            "questionID": "c3"
+          }
+        ]
+      },
+      {
+        "type": "score-question",
+        "position": "3",
+        "text": "Come voti la qualità del LIP (supporto alle installazioni) ?"
+      },
+      {
+        "type": "score-question",
+        "position": "4",
+        "text": "Come voti la qualità dei talk?"
+      },
+      {
+        "position": "5",
+        "text": "Come vedi questo Linux Day?",
+        "type": "radio-question",
+        "answers": [
+          {
+            "text": "Troppo semplice",
+            "questionID": "c9"
+          },
+          {
+            "text": "Giusto",
+            "questionID": "c9"
+          },
+          {
+            "text": "Troppo tecnico",
+            "questionID": "c9"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "position": "2",
+    "legend": "Qualcosa su te",
+    "collection": [
+      {
+        "position": "1",
+        "type": "copy-text",
+        "text": "Abbiamo quasi finito, ora raccontaci qualcosa di te.."
+      },
+      {
+        "position": "2",
+        "text": "Qual'é il tuo nome?",
+        "type": "text-question"
+      },
+      {
+        "position": "3",
+        "text": "Email",
+        "type": "text-question"
+      },
+      {
+        "position": "4",
+        "text": "Da quale città vieni?",
+        "type": "text-question"
+      },
+      {
+        "position": "5",
+        "text": "Quali comunità informatiche online frequenti?",
+        "type": "text-question"
+      },
+      {
+        "position": "6",
+        "text": "Quale sistema operativo usi abitualmente?",
+        "type": "radio-question",
+        "answers": [
+          {
+            "text": "GNU/Linux",
+            "questionID": "c19"
+          },
+          {
+            "text": "Mac OS X",
+            "questionID": "c19"
+          },
+          {
+            "text": "Windows",
+            "questionID": "c19"
+          },
+          {
+            "text": "Altro",
+            "questionID": "c19"
+          }
+        ]
+      },
+      {
+        "position": "7",
+        "text": "Quale sistema operativo per smartphone usi abitualmente?",
+        "type": "radio-question",
+        "answers": [
+          {
+            "text": "Android",
+            "questionID": "c24"
+          },
+          {
+            "text": "iOS",
+            "questionID": "c24"
+          },
+          {
+            "text": "Symbian",
+            "questionID": "c24"
+          },
+          {
+            "text": "Windows",
+            "questionID": "c24"
+          },
+          {
+            "text": "Altro",
+            "questionID": "c24"
+          }
+        ]
+      },
+      {
+        "position": "8",
+        "text": "Che età hai?",
+        "type": "radio-question",
+        "answers": [
+          {
+            "text": "0-13",
+            "questionID": "c30"
+          },
+          {
+            "text": "13-17",
+            "questionID": "c30"
+          },
+          {
+            "text": "18-21",
+            "questionID": "c30"
+          },
+          {
+            "text": "21-30",
+            "questionID": "c30"
+          },
+          {
+            "text": "31-50",
+            "questionID": "c30"
+          },
+          {
+            "text": "61-99",
+            "questionID": "c30"
+          }
+        ]
+      },
+      {
+        "position": "9",
+        "text": "Che attività svolgi?",
+        "type": "radio-question",
+        "answers": [
+          {
+            "text": "Studente",
+            "questionID": "c37"
+          },
+          {
+            "text": "Libero professionista",
+            "questionID": "c37"
+          },
+          {
+            "text": "Disoccupato",
+            "questionID": "c37"
+          },
+          {
+            "text": "Project Manager",
+            "questionID": "c37"
+          },
+          {
+            "text": "Altro",
+            "questionID": "c37"
+          }
+        ]
+      },
+      {
+        "position": "10",
+        "text": "Suggerimenti",
+        "type": "text_area-question"
+      }
+    ]
+  }
+]

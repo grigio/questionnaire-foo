@@ -8,6 +8,7 @@ get '/questionnaire' do
   erb :"questionnaire/index"
 end
 
+
 get '/questionnaire/new' do
   if params[:trkref] || params[:product_name]
     @trkref = params[:trkref]
@@ -23,7 +24,19 @@ get '/questionnaire/new' do
   erb :"questionnaire/new"
 end
 
+post '/questionnaire/submit' do
+  puts '>>>> here'+params.inspect
+  timestamp = Time.now.to_i.to_s
+  File.open("store/results/res-#{timestamp}.json", 'w') do |file|
+    file << JSON.pretty_generate(params)
+  end
+  erb "Inserito "+timestamp
+end
+
+# FIXME: questa chiamata non deve sempre partire
 post '/questionnaire' do
+  puts '>>>> here'+params.inspect
+
   trkref = params.delete('trkref')
   product = params.delete('product')
 
@@ -40,7 +53,8 @@ post '/questionnaire' do
   end
 
   File.open("store/#{filename}.json", 'w') do |file|
-    file << questionnaire.to_json
+    #file << questionnaire.to_json
+    file << JSON.pretty_generate(questionnaire)
   end
 
   'OK'
