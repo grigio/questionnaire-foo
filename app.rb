@@ -1,13 +1,44 @@
 require 'sinatra'
+require 'sinatra/reloader'
 require 'json'
 
+get '/' do
+  redirect '/questionnaire'
+end
+
+# show form
+get '/questionnaire/view' do
+  if params[:trkref] || params[:product_name]
+    @trkref = params[:trkref]
+    @product_name = params[:product_name].sub(' ', '_').downcase
+  end
+
+  filename = "store/#{@trkref}-#{@product_name}.json"
+  if File.exist?(filename)
+    @template = File.read(filename)
+  else
+    @template = File.read('store/default.json')
+  end
+  erb :"questionnaire/view"
+end
+
+# write form data
+post '/questionnaire/submit' do
+  puts '>>>> here'+params.inspect
+  timestamp = Time.now.to_i.to_s
+  File.open("store/results/res-#{timestamp}.json", 'w') do |file|
+    file << JSON.pretty_generate(params)
+  end
+  erb "Inserito "+timestamp
+end
+
+# index
 get '/questionnaire' do
   @existing_templates = Dir.glob('store/*-*.json').map do |filename|
     filename.sub("store/", '').sub('.json', '').split('-')
   end
   erb :"questionnaire/index"
 end
-
 
 get '/questionnaire/new' do
   if params[:trkref] || params[:product_name]
@@ -22,15 +53,6 @@ get '/questionnaire/new' do
     @template = File.read('store/default.json')
   end
   erb :"questionnaire/new"
-end
-
-post '/questionnaire/submit' do
-  puts '>>>> here'+params.inspect
-  timestamp = Time.now.to_i.to_s
-  File.open("store/results/res-#{timestamp}.json", 'w') do |file|
-    file << JSON.pretty_generate(params)
-  end
-  erb "Inserito "+timestamp
 end
 
 # FIXME: questa chiamata non deve sempre partire

@@ -1,0 +1,64 @@
+<h1>Questionnaire <small>for <%= params[:product_name] %> sold by <%= @trkref %></small></h1>
+
+<div class="container-fluid">
+  <div class="row-fluid">
+    <form action="/questionnaire/submit" method="post">
+        <div id="questionnaire-pane" class="span8 well form-horizontal">
+          <h3>This is a questionnaire</h3>
+          <p>Your review will help others. Woo!</p>
+        </div>
+  
+        <div id="builder-pane" class="span4 well">
+
+        </div>
+      </div>
+          <button id="send" class="btn btn-primary btn-large">Invia</button>
+    </form>
+</div>
+
+<script type="text/template" id="section-template">
+  <legend>
+    <span class="legend-text">{{legend}}</span>
+    <span class="close button" data-remove="section">×</span>
+  </legend>
+</script>
+
+<script type="text/template" id="copy-text-template">
+  <p id="copy-text-{{id}}">
+    <span class="editable">{{text}}</span>
+    <span class="close button" data-remove="question">×</span>
+  </p>
+</script>
+
+<% %w{ score text text_area radio }.each do |type| %>
+  <script type="text/template" id="<%= type %>-question-template">
+    <%= erb "questions/_#{type}".to_sym %>
+  </script>
+<% end %>
+
+<script type="text/template" id="answer-template">
+  <input type="radio" value="{{value}}" name="question-{{questionID}}">
+  {{text}}
+  <span class="close button" data-remove="answer">×</span>
+</script>
+
+<script type="text/template" id="inline-edit-template">
+  <input type="text" name="{{inputName}}" value="{{initialValue}}"></input>
+</script>
+
+<script type="text/javascript">
+  $(document).ready( function(){
+    qv = new QuestionnaireView
+    qv.collection.reset(<%= @template %>)
+
+    // dirty disable editing mode
+    $('.close').remove()
+    $('*').sortable( "destroy" ).draggable("destroy")
+
+    $("button#create").click( function(ev){
+      ev.preventDefault();
+      $.post("/questionnaire", {trkref: '<%= @trkref %>', product: '<%= @product_name %>', sections: qv.collection.toJSON()})
+    })
+
+  })
+</script>
