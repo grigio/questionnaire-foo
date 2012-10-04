@@ -6,6 +6,9 @@
       <label class="radio inline">
         <input type="radio" value="<%=i%>" name="question-{{id}}" id="question-{{id}}_<%= i %>" data-score="<%=i%>" required="true">
           <%="☹ pessimo" if i == 1 %>
+          <%="discreto" if i == 2 %>
+          <%="(non so)" if i == 3 %>
+          <%="buono" if i == 4 %>
           <%="☺ ottimo" if i == 5 %>
       </label>
   <% end %>

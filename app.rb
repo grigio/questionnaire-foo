@@ -24,7 +24,6 @@ end
 
 # write form data
 post '/questionnaire/submit' do
-  puts '>>>> here'+params.inspect
   timestamp = Time.now.to_i.to_s
   File.open("store/results/res-#{timestamp}.json", 'w') do |file|
     file << JSON.pretty_generate(params)
@@ -32,7 +31,7 @@ post '/questionnaire/submit' do
   erb "Inserito "+timestamp
 end
 
-# index
+# index list
 get '/questionnaire' do
   @existing_templates = Dir.glob('store/*-*.json').map do |filename|
     filename.sub("store/", '').sub('.json', '').split('-')
@@ -55,10 +54,8 @@ get '/questionnaire/new' do
   erb :"questionnaire/new"
 end
 
-# FIXME: questa chiamata non deve sempre partire
+# write form schema
 post '/questionnaire' do
-  puts '>>>> here'+params.inspect
-
   trkref = params.delete('trkref')
   product = params.delete('product')
 
@@ -75,7 +72,6 @@ post '/questionnaire' do
   end
 
   File.open("store/#{filename}.json", 'w') do |file|
-    #file << questionnaire.to_json
     file << JSON.pretty_generate(questionnaire)
   end
 

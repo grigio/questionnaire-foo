@@ -9,50 +9,115 @@
         "type": "copy-text"
       },
       {
-        "position": "2",
-        "text": "Quale luogo preferisci per il Linux Day?",
-        "type": "radio-question",
-        "answers": [
-          {
-            "text": "Cortile del Maglio (attuale)",
-            "questionID": "c2"
-          },
-          {
-            "text": "Cascina Roccafranca",
-            "questionID": "c2"
-          },
-          {
-            "text": "Non so",
-            "questionID": "c2"
-          }
-        ]
-      },
-      {
         "type": "score-question",
-        "position": "3",
+        "position": "2",
         "text": "Come voti la qualità del LIP (supporto alle installazioni) ?"
       },
       {
         "type": "score-question",
-        "position": "4",
+        "position": "3",
         "text": "Come voti la qualità dei talk?"
       },
       {
-        "position": "5",
+        "position": "4",
         "text": "Come vedi questo Linux Day?",
         "type": "radio-question",
         "answers": [
           {
             "text": "Troppo semplice",
-            "questionID": "c9"
+            "questionID": "c5"
           },
           {
             "text": "Giusto",
-            "questionID": "c9"
+            "questionID": "c5"
           },
           {
             "text": "Troppo tecnico",
+            "questionID": "c5"
+          }
+        ]
+      },
+      {
+        "position": "5",
+        "text": "Da quanti anni vieni al Linux Day?",
+        "type": "radio-question",
+        "answers": [
+          {
+            "text": "è il primo",
             "questionID": "c9"
+          },
+          {
+            "text": "2",
+            "questionID": "c9"
+          },
+          {
+            "text": "3+",
+            "questionID": "c9"
+          }
+        ]
+      },
+      {
+        "position": "5",
+        "text": "Conosci personalmente qualche organizzatore del Linux Day Torino?",
+        "type": "radio-question",
+        "answers": [
+          {
+            "text": "sì",
+            "questionID": "c13"
+          },
+          {
+            "text": "no",
+            "questionID": "c13"
+          }
+        ]
+      },
+      {
+        "position": "6",
+        "text": "Quale luogo preferisci per il Linux Day?",
+        "type": "radio-question",
+        "answers": [
+          {
+            "text": "Cortile del Maglio (attuale)",
+            "questionID": "c16"
+          },
+          {
+            "text": "Cascina Roccafranca",
+            "questionID": "c16"
+          },
+          {
+            "text": "Non so",
+            "questionID": "c16"
+          }
+        ]
+      },
+      {
+        "position": "7",
+        "text": "Come sei venuto a conoscenza del Linux Day?",
+        "type": "radio-question",
+        "answers": [
+          {
+            "text": "Radio/TV",
+            "questionID": "c20"
+          },
+          {
+            "text": "Internet",
+            "questionID": "c20"
+          },
+          {
+            "text": "Conoscenti",
+            "questionID": "c20"
+          },
+          {
+            "text": "Volantini",
+            "questionID": "c20"
+          },
+          {
+            "text": "Informagiovani",
+            "questionID": "c20"
+          },
+          {
+            "text": "Altro",
+            "questionID": "c20"
           }
         ]
       }
@@ -89,114 +154,153 @@
       },
       {
         "position": "6",
-        "text": "Quale sistema operativo usi abitualmente?",
+        "text": "In quale posizione si trova il primo valore di un Array?",
         "type": "radio-question",
         "answers": [
           {
-            "text": "GNU/Linux",
-            "questionID": "c19"
+            "text": "-1",
+            "questionID": "c33"
           },
           {
-            "text": "Mac OS X",
-            "questionID": "c19"
+            "text": "0",
+            "questionID": "c33"
           },
           {
-            "text": "Windows",
-            "questionID": "c19"
+            "text": "1",
+            "questionID": "c33"
           },
           {
-            "text": "Altro",
-            "questionID": "c19"
+            "text": "Non so",
+            "questionID": "c33"
           }
         ]
       },
       {
         "position": "7",
-        "text": "Quale sistema operativo per smartphone usi abitualmente?",
+        "text": "Quale sistema operativo usi abitualmente?",
         "type": "radio-question",
         "answers": [
           {
-            "text": "Android",
-            "questionID": "c24"
+            "text": "GNU/Linux",
+            "questionID": "c38"
           },
           {
-            "text": "iOS",
-            "questionID": "c24"
-          },
-          {
-            "text": "Symbian",
-            "questionID": "c24"
+            "text": "Mac OS X",
+            "questionID": "c38"
           },
           {
             "text": "Windows",
-            "questionID": "c24"
+            "questionID": "c38"
           },
           {
             "text": "Altro",
-            "questionID": "c24"
+            "questionID": "c38"
           }
         ]
       },
       {
         "position": "8",
-        "text": "Che età hai?",
+        "text": "Quale sistema operativo per smartphone usi abitualmente?",
         "type": "radio-question",
         "answers": [
           {
-            "text": "0-13",
-            "questionID": "c30"
+            "text": "Android",
+            "questionID": "c43"
           },
           {
-            "text": "13-17",
-            "questionID": "c30"
+            "text": "iOS",
+            "questionID": "c43"
           },
           {
-            "text": "18-21",
-            "questionID": "c30"
+            "text": "Symbian",
+            "questionID": "c43"
           },
           {
-            "text": "21-30",
-            "questionID": "c30"
+            "text": "Windows",
+            "questionID": "c43"
           },
           {
-            "text": "31-50",
-            "questionID": "c30"
-          },
-          {
-            "text": "61-99",
-            "questionID": "c30"
+            "text": "Altro",
+            "questionID": "c43"
           }
         ]
       },
       {
         "position": "9",
-        "text": "Che attività svolgi?",
+        "text": "Che età hai?",
         "type": "radio-question",
         "answers": [
           {
-            "text": "Studente",
-            "questionID": "c37"
+            "text": "0-13",
+            "questionID": "c49"
           },
           {
-            "text": "Libero professionista",
-            "questionID": "c37"
+            "text": "13-17",
+            "questionID": "c49"
           },
           {
-            "text": "Disoccupato",
-            "questionID": "c37"
+            "text": "18-21",
+            "questionID": "c49"
           },
           {
-            "text": "Project Manager",
-            "questionID": "c37"
+            "text": "21-30",
+            "questionID": "c49"
           },
           {
-            "text": "Altro",
-            "questionID": "c37"
+            "text": "31-50",
+            "questionID": "c49"
+          },
+          {
+            "text": "61-99",
+            "questionID": "c49"
           }
         ]
       },
       {
         "position": "10",
+        "text": "Che attività svolgi?",
+        "type": "radio-question",
+        "answers": [
+          {
+            "text": "Studente",
+            "questionID": "c56"
+          },
+          {
+            "text": "Libero professionista",
+            "questionID": "c56"
+          },
+          {
+            "text": "Disoccupato",
+            "questionID": "c56"
+          },
+          {
+            "text": "Dipendente",
+            "questionID": "c56"
+          },
+          {
+            "text": "Insegnante",
+            "questionID": "c56"
+          },
+          {
+            "text": "Pensionato",
+            "questionID": "c56"
+          },
+          {
+            "text": "Programmatore",
+            "questionID": "c56"
+          },
+          {
+            "text": "Project Manager",
+            "questionID": "c56"
+          },
+          {
+            "text": "Altro",
+            "questionID": "c56"
+          }
+        ]
+      },
+      {
+        "position": "11",
         "text": "Suggerimenti",
         "type": "text_area-question"
       }
