@@ -262,19 +262,11 @@
         "type": "radio-question",
         "answers": [
           {
-            "text": "Studente",
+            "text": "Grafico",
             "questionID": "c56"
           },
           {
-            "text": "Libero professionista",
-            "questionID": "c56"
-          },
-          {
-            "text": "Disoccupato",
-            "questionID": "c56"
-          },
-          {
-            "text": "Dipendente",
+            "text": "Marketing",
             "questionID": "c56"
           },
           {
@@ -282,15 +274,11 @@
             "questionID": "c56"
           },
           {
-            "text": "Pensionato",
-            "questionID": "c56"
-          },
-          {
             "text": "Programmatore",
             "questionID": "c56"
           },
           {
-            "text": "Project Manager",
+            "text": "Manager",
             "questionID": "c56"
           },
           {
@@ -301,8 +289,44 @@
       },
       {
         "position": "11",
+        "text": "Qual'é la tua situazione lavorativa?",
+        "type": "radio-question",
+        "answers": [
+          {
+            "text": "Dipendente",
+            "questionID": "c63"
+          },
+          {
+            "text": "Disoccupato",
+            "questionID": "c63"
+          },
+          {
+            "text": "Cocopro/stage",
+            "questionID": "c63"
+          },
+          {
+            "text": "Libero professionista",
+            "questionID": "c63"
+          },
+          {
+            "text": "Pensionato",
+            "questionID": "c63"
+          },
+          {
+            "text": "Altro",
+            "questionID": "c63"
+          }
+        ]
+      },
+      {
+        "position": "12",
         "text": "Suggerimenti",
         "type": "text_area-question"
+      },
+      {
+        "type": "copy-text",
+        "position": "13",
+        "text": "Compilando tutti i campi e premendo il tasto \"Invia\" ci autorizzi all'analisi dei tuoi dati. Se non sei interessato a ricevere alla tua email comunicazione di eventi F/OSS puoi lasciare il campo in bianco."
       }
     ]
   }

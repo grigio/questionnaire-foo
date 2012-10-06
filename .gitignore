@@ -1,3 +1,4 @@
 tmp/*
 store/results/*
 *.DS_Store
+*.log

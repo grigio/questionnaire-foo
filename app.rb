@@ -1,9 +1,45 @@
+# encoding: utf-8
 require 'sinatra'
-require 'sinatra/reloader'
+require 'bcrypt'
 require 'json'
+require 'sinatra/reloader' if development?
+
+# Basic configs
+
+configure :development do
+  enable :logging, :dump_errors, :raise_errors
+end
+set :show_exceptions, true if development?
+
+if production?
+  logger = ::File.open("store/production.log", "a+")
+  STDOUT.reopen(logger)
+  STDERR.reopen(logger)
+  use Rack::CommonLogger, logger
+end
+
+helpers do
+
+  def protected!
+    unless authorized?
+      response['WWW-Authenticate'] = %(Basic realm="Restricted Area")
+      throw(:halt, [401, "Authentication failed\n"])
+    end
+  end
+
+  def authorized?
+    @auth ||=  Rack::Auth::Basic::Request.new(request.env)
+    #@auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == ['admin', 'admin']
+    @auth.provided? && @auth.basic? && @auth.credentials &&
+      BCrypt::Password.new(ENV['PASSWD_CRYPT']) == @auth.credentials[1]
+  end
+
+end
+
+###
 
 get '/' do
-  redirect '/questionnaire'
+  redirect ENV['HOME_URL'] || '/questionnaire'
 end
 
 # show form
@@ -28,11 +64,19 @@ post '/questionnaire/submit' do
   File.open("store/results/res-#{timestamp}.json", 'w') do |file|
     file << JSON.pretty_generate(params)
   end
-  erb "Inserito "+timestamp
+
+  res = <<ERB
+    <h1>Congratulazioni :)</h1>
+    <p>
+      Il tuo questionario è stato registrato con codice #{timestamp}
+    </P>
+ERB
+
 end
 
 # index list
 get '/questionnaire' do
+  protected!
   @existing_templates = Dir.glob('store/*-*.json').map do |filename|
     filename.sub("store/", '').sub('.json', '').split('-')
   end
@@ -40,6 +84,7 @@ get '/questionnaire' do
 end
 
 get '/questionnaire/new' do
+  protected!
   if params[:trkref] || params[:product_name]
     @trkref = params[:trkref]
     @product_name = params[:product_name].sub(' ', '_').downcase
@@ -56,6 +101,7 @@ end
 
 # write form schema
 post '/questionnaire' do
+  protected!
   trkref = params.delete('trkref')
   product = params.delete('product')
 

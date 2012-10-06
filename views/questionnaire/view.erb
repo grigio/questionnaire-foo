@@ -5,8 +5,7 @@
         </div>
   
         <div id="builder-pane" class="span4 well">
-          <img src="/logo.png" /><br>
-          Compilando tutti i campi e premendo il tasto "Invia" ci autorizzi all'analisi dei tuoi dati. Se non sei interessato a ricevere alla tua email comunicazione di eventi F/OSS puoi lasciare il campo in bianco.
+          <img src="/logo.png" />
         </div>
     
         <button id="send" class="btn btn-primary btn-large span7 offset3" style="margin-bottom:1em;">Invia</button>
@@ -37,7 +36,7 @@
 <% end %>
 
 <script type="text/template" id="answer-template">
-  <input type="radio" value="{{value}}" name="question-{{questionID}}">
+  <input type="radio" value="{{value}}" name="question-{{questionID}}" required="true">
   {{text}}
   <span class="close button" data-remove="answer">×</span>
 </script>
@@ -51,9 +50,9 @@
     qv = new QuestionnaireView
     qv.collection.reset(<%= @template %>)
 
-    // dirty disable editing mode
+    // dirty hacks - disable editing mode
     $('.close').remove()
-    $('label').removeClass('editable')
+    $('*').removeClass('editable')
     $('*').sortable( "destroy" ).draggable("destroy")
 
     $("button#create").click( function(ev){
