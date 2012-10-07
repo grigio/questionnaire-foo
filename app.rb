@@ -1,8 +1,8 @@
 # encoding: utf-8
 require 'sinatra'
+#require 'sinatra/reloader' if development?
 require 'bcrypt'
 require 'json'
-require 'sinatra/reloader' if development?
 
 # Basic configs
 

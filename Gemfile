@@ -7,9 +7,9 @@ gem 'sinatra'
 gem 'sprockets'
 gem 'bcrypt-ruby'
 
-platforms :linux do
-  gem 'therubyracer'
-end
+# 4 Linux
+gem 'therubyracer'
+
 
 group :development do
   # sinatra reload
