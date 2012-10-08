@@ -1,4 +1,5 @@
 .env
+store/*
 store/results/*
 tmp/*
 *.DS_Store

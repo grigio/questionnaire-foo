@@ -1,1 +1,1 @@
-web: rackup -p 9000
+web: bundle exec thin start

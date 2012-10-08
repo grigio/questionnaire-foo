@@ -1,6 +1,7 @@
 <div class="container-fluid">
   <div class="row-fluid">
     <form action="/questionnaire/submit" method="post">
+        <input type="hidden" name="questionnaire" value="<%= @product_name %>">
         <div id="questionnaire-pane" class="span8 well form-horizontal">
         </div>
   

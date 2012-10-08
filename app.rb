@@ -1,6 +1,6 @@
 # encoding: utf-8
 require 'sinatra'
-#require 'sinatra/reloader' if development?
+require 'sinatra/reloader' if development?
 require 'bcrypt'
 require 'json'
 require 'rack/env'
@@ -42,7 +42,7 @@ end
 ###
 
 get '/' do
-  redirect ENV['HOME_URL'] || '/questionnaire'
+  redirect ENV['HOME_URL'] || '/questionnaire/view'
 end
 
 # show form
@@ -64,7 +64,7 @@ end
 # write form data
 post '/questionnaire/submit' do
   timestamp = Time.now.to_i.to_s
-  File.open(ENV['OPENSHIFT_DATA_DIR']+"store/results/res-#{timestamp}.json", 'w') do |file|
+  File.open(ENV['OPENSHIFT_DATA_DIR']+"store/results/res-#{params[:questionnaire]}_#{timestamp}.json", 'w') do |file|
     file << JSON.pretty_generate(params)
   end
 
@@ -75,13 +75,14 @@ post '/questionnaire/submit' do
     </P>
 ERB
 
+  erb res
 end
 
 # index list
 get '/questionnaire' do
   protected!
   @existing_templates = Dir.glob(ENV['OPENSHIFT_DATA_DIR']+'store/*-*.json').map do |filename|
-    filename.sub("store/", '').sub('.json', '').split('-')
+    filename.sub(ENV['OPENSHIFT_DATA_DIR']+'store/', '').sub('.json', '').split('-')
   end
   erb :"questionnaire/index"
 end

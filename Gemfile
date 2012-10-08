@@ -3,7 +3,7 @@ source :rubygems
 gem 'bundler'
 gem 'coffee-script'
 gem 'rack'
-gem 'rack-env'
+gem 'rack-env', git: 'git://github.com/grigio/rack-env.git'
 gem 'sinatra'
 gem 'sprockets'
 gem 'bcrypt-ruby'
