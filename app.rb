@@ -15,7 +15,7 @@ end
 set :show_exceptions, true if development?
 
 if production?
-  logger = ::File.open("store/production.log", "a+")
+  logger = ::File.open(ENV['OPENSHIFT_DATA_DIR']+"store/production.log", "a+")
   STDOUT.reopen(logger)
   STDERR.reopen(logger)
   use Rack::CommonLogger, logger
