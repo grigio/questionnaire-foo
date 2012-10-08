@@ -54,9 +54,9 @@ get '/questionnaire/view' do
 
   filename = "store/#{@trkref}-#{@product_name}.json"
   if File.exist?(filename)
-    @template = File.read(filename)
+    @template = File.read(ENV['OPENSHIFT_DATA_DIR']+filename)
   else
-    @template = File.read('store/default.json')
+    @template = File.read(ENV['OPENSHIFT_DATA_DIR']+'store/default.json')
   end
   erb :"questionnaire/view"
 end
@@ -64,7 +64,7 @@ end
 # write form data
 post '/questionnaire/submit' do
   timestamp = Time.now.to_i.to_s
-  File.open("store/results/res-#{timestamp}.json", 'w') do |file|
+  File.open(ENV['OPENSHIFT_DATA_DIR']+"store/results/res-#{timestamp}.json", 'w') do |file|
     file << JSON.pretty_generate(params)
   end
 
@@ -80,7 +80,7 @@ end
 # index list
 get '/questionnaire' do
   protected!
-  @existing_templates = Dir.glob('store/*-*.json').map do |filename|
+  @existing_templates = Dir.glob(ENV['OPENSHIFT_DATA_DIR']+'store/*-*.json').map do |filename|
     filename.sub("store/", '').sub('.json', '').split('-')
   end
   erb :"questionnaire/index"
@@ -94,12 +94,18 @@ get '/questionnaire/new' do
   end
 
   filename = "store/#{@trkref}-#{@product_name}.json"
-  if File.exist?(filename)
-    @template = File.read(filename)
+  if File.exist?(ENV['OPENSHIFT_DATA_DIR']+filename)
+    @template = File.read(ENV['OPENSHIFT_DATA_DIR']+filename)
   else
-    @template = File.read('store/default.json')
+    @template = File.read(ENV['OPENSHIFT_DATA_DIR']+'store/default.json')
   end
   erb :"questionnaire/new"
+end
+
+# check env variables
+get '/secrets' do
+  protected!
+  erb ENV.map{|e|e[0]+": "+e[1]}.join("<br>\n")
 end
 
 # write form schema
@@ -120,7 +126,7 @@ post '/questionnaire' do
     section
   end
 
-  File.open("store/#{filename}.json", 'w') do |file|
+  File.open(ENV['OPENSHIFT_DATA_DIR']+"store/#{filename}.json", 'w') do |file|
     file << JSON.pretty_generate(questionnaire)
   end
 
