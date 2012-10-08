@@ -3,6 +3,9 @@ require 'sinatra'
 #require 'sinatra/reloader' if development?
 require 'bcrypt'
 require 'json'
+require 'rack/env'
+
+use Rack::Env # load .env variables
 
 # Basic configs
 
