@@ -4,8 +4,13 @@ _Questionnaire Foo_ is a simple WYSIWYG survey system for hackers which save the
 
 
 ## Installation
+
+```
 bundle install
+cp .env.example .env # customize as you like it
 foreman start
+# rackup is an alternative server start but it doesn't support Sinatra reloading
+```
 
 ## Setup and customization
 

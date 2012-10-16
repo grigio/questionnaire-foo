@@ -45,6 +45,28 @@ get '/' do
   redirect ENV['HOME_URL'] || '/questionnaire/view'
 end
 
+# current stats
+get '/questionnaire/stats' do
+  if params[:trkref] || params[:product_name]
+    @trkref = params[:trkref]
+    @product_name = params[:product_name].sub(' ', '_').downcase
+  end
+
+  # filename = "store/#{@trkref}-#{@product_name}.json"
+  # if File.exist?(filename)
+  #   @template = File.read(ENV['OPENSHIFT_DATA_DIR']+filename)
+  # else
+  #   @template = File.read(ENV['OPENSHIFT_DATA_DIR']+'store/default.json')
+  # end
+
+  filenames = Dir.entries(ENV['OPENSHIFT_DATA_DIR']+"store/results").map do |f|
+    f if f.start_with?("res-#{@product_name}")
+  end
+
+  res = filenames
+  erb res.join('<br>')
+end
+
 # show form
 get '/questionnaire/view' do
   if params[:trkref] || params[:product_name]
