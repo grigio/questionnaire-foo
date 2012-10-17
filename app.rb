@@ -3,6 +3,8 @@ require 'sinatra'
 require 'sinatra/reloader' if development?
 require 'bcrypt'
 require 'json'
+require './counter_hash'
+
 
 # Basic configs
 
@@ -58,13 +60,16 @@ get '/questionnaire/stats' do
 
   filenames = Dir.entries(ENV['OPENSHIFT_DATA_DIR']+"store/results").find_all do |f|
     f.start_with?("res-#{@product_name}")
-    
   end
 
+  @ch = CounterHash.new
 
+  filenames.map do |f| 
+    hash_piece = JSON.parse File.open(ENV['OPENSHIFT_DATA_DIR']+"store/results/"+f){|f| f.read}
+    @ch.add_hash(hash_piece)
+  end
 
-  res = filenames.inspect
-  erb res#.join('<br>')
+  erb :"questionnaire/stats"
 end
 
 # show form

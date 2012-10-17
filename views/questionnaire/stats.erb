@@ -1,0 +1,37 @@
+<div class="container-fluid">
+  <div class="row-fluid">
+
+  <% @ch.to_hash.each do |k,v| %>
+    <div style="border:1px; margin-bottom:1em;">
+      <strong><%= k %></strong><br>
+      <% v.each do |k,v| %>
+        <%= k.to_s+"("+v[:count].to_s+")" %><br>
+        <% answer_width = v[:count].to_f * 300 / @ch.count %>
+        <div style="display:block; background-color:black; height:3px;
+        width:<%= answer_width %>px" ></div>
+      <% end %>
+    </div>
+  <% end %>
+    
+  </div>
+
+</div>
+
+
+<script type="text/javascript">
+  // $(document).ready( function(){
+  //   qv = new QuestionnaireView
+  //   qv.collection.reset(<%= @template %>)
+
+  //   // dirty hacks - disable editing mode
+  //   $('.close').remove()
+  //   $('*').removeClass('editable')
+  //   $('*').sortable( "destroy" ).draggable("destroy")
+
+  //   $("button#create").click( function(ev){
+  //     ev.preventDefault();
+  //     $.post("/questionnaire", {trkref: '<%= @trkref %>', product: '<%= @product_name %>', sections: qv.collection.toJSON()})
+  //   })
+
+  // })
+</script>
