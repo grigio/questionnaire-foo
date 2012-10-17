@@ -3,9 +3,6 @@ require 'sinatra'
 require 'sinatra/reloader' if development?
 require 'bcrypt'
 require 'json'
-require 'rack/env'
-
-use Rack::Env # load .env variables
 
 # Basic configs
 
@@ -59,12 +56,15 @@ get '/questionnaire/stats' do
   #   @template = File.read(ENV['OPENSHIFT_DATA_DIR']+'store/default.json')
   # end
 
-  filenames = Dir.entries(ENV['OPENSHIFT_DATA_DIR']+"store/results").map do |f|
-    f if f.start_with?("res-#{@product_name}")
+  filenames = Dir.entries(ENV['OPENSHIFT_DATA_DIR']+"store/results").find_all do |f|
+    f.start_with?("res-#{@product_name}")
+    
   end
 
-  res = filenames
-  erb res.join('<br>')
+
+
+  res = filenames.inspect
+  erb res#.join('<br>')
 end
 
 # show form

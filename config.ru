@@ -2,6 +2,9 @@ require 'bundler'
 Bundler.setup :default
 require 'sinatra/base'
 require 'sprockets'
+require 'dotenv'
+Dotenv.load
+
 require './app'
 
 map '/assets' do
