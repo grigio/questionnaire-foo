@@ -91,6 +91,8 @@ end
 # write form data
 post '/questionnaire/submit' do
   timestamp = Time.now.to_i.to_s
+  # WARN: massive normalize the output
+  params.map{|k,v| v.rstrip!; v.downcase!}
   File.open(ENV['OPENSHIFT_DATA_DIR']+"store/results/res-#{params[:questionnaire]}_#{timestamp}.json", 'w') do |file|
     file << JSON.pretty_generate(params)
   end
@@ -158,5 +160,5 @@ post '/questionnaire' do
     file << JSON.pretty_generate(questionnaire)
   end
 
-  'OK'
+  erb 'OK'
 end
