@@ -96,15 +96,19 @@
         "type": "radio-question",
         "answers": [
           {
-            "text": "Radio/TV",
+            "text": "Radio/TV/Giornali",
             "questionID": "c20"
           },
           {
-            "text": "Internet",
+            "text": "Siti Internet",
             "questionID": "c20"
           },
           {
-            "text": "Conoscenti",
+            "text": "Social Network",
+            "questionID": "c20"
+          },
+          {
+            "text": "Amici/Conoscenti",
             "questionID": "c20"
           },
           {
@@ -159,34 +163,34 @@
         "answers": [
           {
             "text": "Maschio",
-            "questionID": "c73"
+            "questionID": "c34"
           },
           {
             "text": "Femmina",
-            "questionID": "c73"
+            "questionID": "c34"
           }
         ]
       },
       {
         "position": "7",
-        "text": "In quale posizione si trova il primo valore di un Array?",
+        "text": "In quale posizione si trova il primo valore di un Array? (linguaggi moderni)",
         "type": "radio-question",
         "answers": [
           {
             "text": "-1",
-            "questionID": "c33"
+            "questionID": "c37"
           },
           {
             "text": "0",
-            "questionID": "c33"
+            "questionID": "c37"
           },
           {
             "text": "1",
-            "questionID": "c33"
+            "questionID": "c37"
           },
           {
             "text": "Non so",
-            "questionID": "c33"
+            "questionID": "c37"
           }
         ]
       },
@@ -197,19 +201,19 @@
         "answers": [
           {
             "text": "GNU/Linux",
-            "questionID": "c38"
+            "questionID": "c42"
           },
           {
             "text": "Mac OS X",
-            "questionID": "c38"
+            "questionID": "c42"
           },
           {
             "text": "Windows",
-            "questionID": "c38"
+            "questionID": "c42"
           },
           {
             "text": "Altro",
-            "questionID": "c38"
+            "questionID": "c42"
           }
         ]
       },
@@ -220,23 +224,23 @@
         "answers": [
           {
             "text": "Android",
-            "questionID": "c43"
+            "questionID": "c47"
           },
           {
             "text": "iOS",
-            "questionID": "c43"
+            "questionID": "c47"
           },
           {
             "text": "Symbian",
-            "questionID": "c43"
+            "questionID": "c47"
           },
           {
             "text": "Windows",
-            "questionID": "c43"
+            "questionID": "c47"
           },
           {
             "text": "Altro",
-            "questionID": "c43"
+            "questionID": "c47"
           }
         ]
       },
@@ -247,104 +251,127 @@
         "answers": [
           {
             "text": "13-17",
-            "questionID": "c49"
+            "questionID": "c53"
           },
           {
             "text": "18-24",
-            "questionID": "c49"
+            "questionID": "c53"
           },
           {
             "text": "25-34",
-            "questionID": "c49"
+            "questionID": "c53"
           },
           {
             "text": "35-44",
-            "questionID": "c49"
+            "questionID": "c53"
           },
           {
             "text": "45-54",
-            "questionID": "c49"
+            "questionID": "c53"
           },
           {
             "text": "55-64",
-            "questionID": "c49"
+            "questionID": "c53"
           },
           {
             "text": "65+",
-            "questionID": "c49"
+            "questionID": "c53"
           }
         ]
       },
       {
         "position": "11",
-        "text": "Che attività svolgi?",
+        "text": "Dove studi o studiavi?",
         "type": "radio-question",
         "answers": [
           {
-            "text": "Grafico",
-            "questionID": "c57"
+            "text": "Università",
+            "questionID": "c61"
           },
           {
-            "text": "Marketing",
-            "questionID": "c57"
+            "text": "Politecnico",
+            "questionID": "c61"
           },
           {
-            "text": "Insegnante",
-            "questionID": "c57"
-          },
-          {
-            "text": "Programmatore",
-            "questionID": "c57"
-          },
-          {
-            "text": "Manager",
-            "questionID": "c57"
-          },
-          {
-            "text": "Altro",
-            "questionID": "c57"
+            "text": "Altra scuola",
+            "questionID": "c61"
           }
         ]
       },
       {
         "position": "12",
-        "text": "Qual'é la tua situazione lavorativa?",
+        "text": "Che attività svolgi?",
         "type": "radio-question",
         "answers": [
           {
-            "text": "Dipendente",
-            "questionID": "c64"
+            "text": "Grafico",
+            "questionID": "c65"
           },
           {
-            "text": "Disoccupato",
-            "questionID": "c64"
+            "text": "Marketing",
+            "questionID": "c65"
           },
           {
-            "text": "Cocopro/stage",
-            "questionID": "c64"
+            "text": "Insegnante",
+            "questionID": "c65"
           },
           {
-            "text": "Libero professionista",
-            "questionID": "c64"
+            "text": "Programmatore",
+            "questionID": "c65"
           },
           {
-            "text": "Pensionato",
-            "questionID": "c64"
+            "text": "Manager",
+            "questionID": "c65"
           },
           {
             "text": "Altro",
-            "questionID": "c64"
+            "questionID": "c65"
           }
         ]
       },
       {
         "position": "13",
+        "text": "Qual'é la tua situazione lavorativa?",
+        "type": "radio-question",
+        "answers": [
+          {
+            "text": "Dipendente",
+            "questionID": "c72"
+          },
+          {
+            "text": "Disoccupato",
+            "questionID": "c72"
+          },
+          {
+            "text": "Cocopro/stage",
+            "questionID": "c72"
+          },
+          {
+            "text": "Libero professionista",
+            "questionID": "c72"
+          },
+          {
+            "text": "Pensionato",
+            "questionID": "c72"
+          },
+          {
+            "text": "Studente",
+            "questionID": "c72"
+          },
+          {
+            "text": "Altro",
+            "questionID": "c72"
+          }
+        ]
+      },
+      {
+        "position": "14",
         "text": "Suggerimenti",
         "type": "text_area-question"
       },
       {
         "type": "copy-text",
-        "position": "14",
+        "position": "15",
         "text": "Compilando tutti i campi e premendo il tasto \"Invia\" ci autorizzi all'analisi dei tuoi dati. Se non sei interessato a ricevere alla tua email comunicazione di eventi F/OSS puoi lasciare il campo in bianco."
       }
     ]
