@@ -46,6 +46,7 @@ end
 
 # current stats
 get '/questionnaire/stats' do
+  protected!
   if params[:trkref] || params[:product_name]
     @trkref = params[:trkref]
     @product_name = params[:product_name].sub(' ', '_').downcase
