@@ -57,7 +57,7 @@
         ]
       },
       {
-        "position": "5",
+        "position": "6",
         "text": "Conosci personalmente qualche organizzatore del Linux Day Torino?",
         "type": "radio-question",
         "answers": [
@@ -72,7 +72,7 @@
         ]
       },
       {
-        "position": "6",
+        "position": "7",
         "text": "Quale luogo preferisci per il Linux Day?",
         "type": "radio-question",
         "answers": [
@@ -91,7 +91,22 @@
         ]
       },
       {
-        "position": "7",
+        "position": "8",
+        "text": "Hai già provato un LiveCd di Linux sul tuo PC?",
+        "type": "radio-question",
+        "answers": [
+          {
+            "text": "Sì",
+            "questionID": "c163"
+          },
+          {
+            "text": "No",
+            "questionID": "c163"
+          }
+        ]
+      },
+      {
+        "position": "9",
         "text": "Come sei venuto a conoscenza del Linux Day?",
         "type": "radio-question",
         "answers": [
