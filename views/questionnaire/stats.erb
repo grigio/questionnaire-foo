@@ -1,8 +1,29 @@
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+
+var width = 480,
+    height = 250,
+    radius = Math.min(width, height) / 2;
+
+var color = d3.scale.ordinal()
+    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+var arc = d3.svg.arc()
+    .outerRadius(radius - 10)
+    .innerRadius(0);
+
+var pie = d3.layout.pie()
+    .sort(null)
+    .value(function(d) { return d.population; });
+</script>
+
+
+
 <div class="container-fluid">
   <div class="row-fluid">
 
   <% @ch.to_hash.each do |k,v| %>
-    <div style="border:1px; margin-bottom:1em;">
+    <div id="<%= k %>" style="border:1px; margin-bottom:1em;">
       <strong><%= k %></strong><br>
       <% v.each do |k,v| %>
         <%= k.to_s+"("+v[:count].to_s+")" %><br>
@@ -10,6 +31,48 @@
         <div style="display:block; background-color:black; height:3px;
         width:<%= answer_width %>px" ></div>
       <% end %>
+
+<script>
+var svg = d3.select("#<%= k %>").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+  .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+//d3.csv("data.csv", function(error, data) {
+
+  var data=[];
+<% @count=0; v.each do |k,v| %>
+  data[<%= @count.to_s %>]= new Object();
+  data[<%= @count.to_s %>].age="<%= k.to_s %>";
+  data[<%= @count.to_s %>].population=<%= v[:count].to_f.to_s %>;
+  <% @count+= 1 %>
+<% end %>
+
+
+  data.forEach(function(d) {
+    d.population = +d.population;
+  });
+
+  var g = svg.selectAll(".arc")
+      .data(pie(data))
+    .enter().append("g")
+      .attr("class", "arc");
+
+  g.append("path")
+      .attr("d", arc)
+      .style("fill", function(d) { return color(d.data.age); });
+
+  g.append("text")
+      .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+      .attr("dy", ".35em")
+      .style("text-anchor", "middle")
+      .text(function(d) { return d.data.age; });
+
+//});
+
+</script>
+
     </div>
   <% end %>
     
